@@ -29,18 +29,20 @@ namespace TaskTwo
         public void WriteExecutor()
         {
             Console.WriteLine("I base Executor!");
+            Console.WriteLine("I one Executor!");
+            Console.WriteLine("I two Executor!");
         }
     }
 
-    
+
 
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             var @base = new Base();
             @base.WriteExecutor();
-            
+            Console.ReadKey();
         }
     }
 }

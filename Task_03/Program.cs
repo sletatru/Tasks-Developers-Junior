@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TaskThree
 {
@@ -15,32 +16,33 @@ namespace TaskThree
         Update,
 
         Delete
-        
+
     }
+
+    delegate void Test(ActionType type);
 
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             var type = ActionType.Read;
 
-            switch (type)
+            Test t1 = CreateMethod;
+            Test t2 = ReadMethod;
+            Test t3 = UpdateMethod;
+            Test t4 = DeleteMethod;
+
+            List<Test> L1 = new List<Test>
             {
-                case ActionType.Create:
-                    CreateMethod(type);
-                    break;
-                case ActionType.Read:
-                    ReadMethod(type);
-                    break;
-                case ActionType.Update:
-                    UpdateMethod(type);
-                    break;
-                case ActionType.Delete:
-                    DeleteMethod(type);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+                t1,
+                t2,
+                t3,
+                t4
+            };
+
+            L1[(int)type](type);
+
+            Console.ReadKey();
         }
 
         private static void CreateMethod(ActionType type)
