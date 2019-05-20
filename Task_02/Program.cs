@@ -4,6 +4,16 @@ namespace TaskTwo
 {
 
 
+
+
+    /// Второе решение сделал через явное указание принадлежности метода интерфейсу
+    /// 
+    /// 
+    /// 
+    /// 
+    /// 
+    /// 
+    /// 
     /// Есть базовый класс с реалиазцией двух интерфейсов, имеющих одинаковый метод
     /// строка var @base = new Base(); - создаёт объект типа Base
     /// вызов @base.WriteExecutor()    - выводит на экран строку I base Executor!
@@ -29,9 +39,15 @@ namespace TaskTwo
         public void WriteExecutor()
         {
             Console.WriteLine("I base Executor!");
+            //Console.WriteLine("I one Executor!");
+            //Console.WriteLine("I two Executor!");
+        }
+        void IOneExecutor.WriteExecutor()
+        {
             Console.WriteLine("I one Executor!");
             Console.WriteLine("I two Executor!");
         }
+            
     }
 
 
@@ -42,6 +58,7 @@ namespace TaskTwo
         {
             var @base = new Base();
             @base.WriteExecutor();
+            ((IOneExecutor)@base).WriteExecutor();
             Console.ReadKey();
         }
     }
