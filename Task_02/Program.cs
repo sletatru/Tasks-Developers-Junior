@@ -29,6 +29,8 @@ namespace TaskTwo
         public void WriteExecutor()
         {
             Console.WriteLine("I base Executor!");
+            Console.WriteLine("I one Executor!");
+            Console.WriteLine("I two Executor!");
         }
     }
 
