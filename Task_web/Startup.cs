@@ -31,7 +31,7 @@ namespace Task_web
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddSingleton<IList<TestModel>>(new List<TestModel>());
+            services.AddSingleton<List<TestModel>>(new List<TestModel>());
 
             services.AddSwaggerGen(c =>
             {

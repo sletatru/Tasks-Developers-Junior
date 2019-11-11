@@ -48,8 +48,7 @@ namespace TaskOne
 
             Console.WriteLine($"{data} => {summary}");
 
-           
-
+          
         }
     }
 }

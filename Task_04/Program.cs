@@ -11,10 +11,22 @@ namespace Task_04
 
     class Program
     {
-        
+        static List<DateTime> AlarmClockTimer(DateTime wakeUp)
+        {
+            List<DateTime> dates = new List<DateTime>();
+            int timeShift = Convert.ToInt32((wakeUp - DateTime.Now).TotalSeconds);
+            for(int i = timeShift; i > 0; i--)
+            {
+                DateTime date = wakeUp.AddSeconds(-i);
+                dates.Add(date);
+            }
+            return dates;
+        }
+
         static void Main(string[] args)
         {
-            var wakeUp = DateTime.Now.AddSeconds(10);
+            int AnySec = 10;
+            var wakeUp = DateTime.Now.AddSeconds(AnySec);
             foreach (DateTime value in AlarmClockTimer(wakeUp))
             {
 
