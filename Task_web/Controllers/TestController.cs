@@ -12,34 +12,17 @@ namespace Task_web.Controllers
     public class TestController : ControllerBase
     {
         private List<TestModel> _testModels;
-        /*
-        public TestController()
-        {
-            _testModels = new List<TestModel>();
-            var testModel = new TestModel();
-            testModel.Id = 1;
-            testModel.Identifier = new Guid();
-            testModel.Name = "name";
-            _testModels.Add(testModel);
 
-        }
-        */
-        
         public TestController(List<TestModel> testModels)
         {
-            _testModels = testModels;
+            _testModels = testModels; 
         }
         
-
         //необходимо релизовать CRUD для testModels
         // GET api/test
         [HttpGet]
         public ActionResult<List<TestModel>> Get()
         {
-            // var testModels = new List<TestModel>();
-            // var result = new ActionResult<IList<TestModel>>(_testModels);
-            // return result;
-
             return _testModels;
         }
 
@@ -47,51 +30,63 @@ namespace Task_web.Controllers
         [HttpGet("{id}")]
         public ActionResult<TestModel> Get(long id)
         {
-            /*for list() {
-                if (iterator.id = id{
-                    retuyrn ite;s
+            foreach(TestModel item in _testModels)
+            {
+                if (item.Id == id)
+                {
+                    return item;
                 }
             }
-
-            retrun NotFoutnd*/
-
-            var testModel = new TestModel();
-            testModel.Id = id;
-            testModel.Name = "ann";
-            if (testModel == null)
-            {
-                return NotFound();
-            }
-
-            return testModel;
+            return NotFound();
         }
+
         // POST api/test
         [HttpPost]
-        public void Post([FromBody] TestModel item)
+        public ActionResult<TestModel> Post([FromBody] TestModel testModel)
         {
-            /*_testModels = new List<TestModel>();
-            var testModel = new TestModel();
-            testModel.Id = 1;
-            testModel.Identifier = new Guid();
-            testModel.Name = "name";
             _testModels.Add(testModel);
-            return _testModels;*/
-            int a = 1;
-            //add
+            return CreatedAtAction(nameof(Get), new { id = testModel.Id }, testModel);
         }
 
         // PUT api/test/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] TestModel item)
+        public ActionResult<TestModel> Put(long id, [FromBody] TestModel testModel)
         {
-            int a = 0;
+            bool changed = false;
+            foreach(TestModel item in _testModels)
+            {
+                if (id == item.Id)
+                {
+                    changed = true;
+                    if (testModel.Name != null)
+                    {
+                        item.Name = testModel.Name;
+                    }
+                    if (testModel.Identifier != null)
+                    {
+                        item.Identifier = testModel.Identifier;
+                    }
+                }                
+            }
+            if (changed == false) {
+                return BadRequest();
+            }             
+            return NoContent();
         }
 
         // DELETE api/test/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult<TestModel> Delete(long id)
         {
-            int a = 2;
+            foreach(TestModel item in _testModels)
+            {
+                if (id == item.Id)
+                {
+                    _testModels.Remove(item);
+                    return NoContent();
+                }
+            }
+            return NotFound();
         }
     }
 }
