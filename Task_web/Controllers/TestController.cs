@@ -4,6 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Task_web.Models;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace Task_web.Controllers
 {
@@ -76,7 +79,7 @@ namespace Task_web.Controllers
 
         // DELETE api/test/5
         [HttpDelete("{id}")]
-        public ActionResult<TestModel> Delete(long id)
+        public ActionResult<HttpStatusCode> Delete(long id)
         {
             foreach(TestModel item in _testModels)
             {
