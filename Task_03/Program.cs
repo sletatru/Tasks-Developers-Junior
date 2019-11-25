@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using System.Collections.Generic;
 
 namespace TaskThree
 {
@@ -19,41 +20,47 @@ namespace TaskThree
     {
         static void Main(string[] args)
         {
-            Dictionary<ActionType, method> methods = new Dictionary<ActionType, method>();
-            methods.Add(ActionType.Create, CreateMethod());
-            methods.Add(ActionType.Read, ReadMethod());
-            methods.Add(ActionType.Update, UpdateMethod());
-            methods.Add(ActionType.Delete, DeleteMethod());
-
+            /*
+switch (type)
+{
+    case ActionType.Create:
+        CreateMethod(type);
+        break;
+    case ActionType.Read:
+        ReadMethod(type);
+        break;
+    case ActionType.Update:
+        UpdateMethod(type);
+        break;
+    case ActionType.Delete:
+        DeleteMethod(type);
+        break;
+    default:
+        throw new ArgumentOutOfRangeException();
+}
+*/
+            var myMethods = new Dictionary<ActionType, string>();
+            myMethods[ActionType.Create] = "CreateMethod";
+            myMethods[ActionType.Read] = "ReadMethod";
+            myMethods[ActionType.Update] = "UpdateMethod";
+            myMethods[ActionType.Delete] = "DeleteMethod";
 
             var type = ActionType.Read;
-            if (methods= methods.find(type) != end) {
-                methods.calls(type);
+            if (myMethods.ContainsKey(type)) {
+                // Invoke methods
+                var programType = Type.GetType("TaskThree.Program");
+                if (programType == null) {
+                    // todo;
+                }
+                var methodName = myMethods[type];
+                var invokeMethod = programType.GetMethod(myMethods[type], BindingFlags.NonPublic | BindingFlags.Static);
+                if (invokeMethod == null) {
+                    // todo;
+                } 
+                invokeMethod.Invoke(null, new object[] { type });
             } else {
                 throw new ArgumentOutOfRangeException();
-
             }
-
-
-            /*
-            switch (type)
-            {
-                case ActionType.Create:
-                    CreateMethod(type);
-                    break;
-                case ActionType.Read:
-                    ReadMethod(type);
-                    break;
-                case ActionType.Update:
-                    UpdateMethod(type);
-                    break;
-                case ActionType.Delete:
-                    DeleteMethod(type);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-            */
         }
 
         private static void CreateMethod(ActionType type)
