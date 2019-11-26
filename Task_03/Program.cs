@@ -20,25 +20,6 @@ namespace TaskThree
     {
         static void Main(string[] args)
         {
-            /*
-switch (type)
-{
-    case ActionType.Create:
-        CreateMethod(type);
-        break;
-    case ActionType.Read:
-        ReadMethod(type);
-        break;
-    case ActionType.Update:
-        UpdateMethod(type);
-        break;
-    case ActionType.Delete:
-        DeleteMethod(type);
-        break;
-    default:
-        throw new ArgumentOutOfRangeException();
-}
-*/
             var myMethods = new Dictionary<ActionType, string>();
             myMethods[ActionType.Create] = "CreateMethod";
             myMethods[ActionType.Read] = "ReadMethod";
@@ -46,21 +27,16 @@ switch (type)
             myMethods[ActionType.Delete] = "DeleteMethod";
 
             var type = ActionType.Read;
-            if (myMethods.ContainsKey(type)) {
+            if (myMethods.ContainsKey(type))
+            {
                 // Invoke methods
                 var programType = Type.GetType("TaskThree.Program");
-                if (programType == null) {
-                    // todo;
-                }
+                if (programType == null) { throw new ArgumentNullException(); }
                 var methodName = myMethods[type];
                 var invokeMethod = programType.GetMethod(myMethods[type], BindingFlags.NonPublic | BindingFlags.Static);
-                if (invokeMethod == null) {
-                    // todo;
-                } 
+                if (invokeMethod == null) { throw new ArgumentNullException(); }
                 invokeMethod.Invoke(null, new object[] { type });
-            } else {
-                throw new ArgumentOutOfRangeException();
-            }
+            } else { throw new ArgumentOutOfRangeException(); }
         }
 
         private static void CreateMethod(ActionType type)

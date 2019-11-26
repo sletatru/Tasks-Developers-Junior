@@ -28,7 +28,7 @@ namespace TaskOne
             var digits = from item in data
                          where char.IsDigit(item)
                          select Convert.ToByte(item.ToString());
-            return digits;
+            yield return digits;
         }
     }
     class Program
@@ -68,7 +68,6 @@ namespace TaskOne
 
             Console.WriteLine($"{data} => {summary}");
 
-          
         }
     }
 }
