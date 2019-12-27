@@ -1,11 +1,9 @@
 ﻿using System;
+using System.Reflection;
+using System.Collections.Generic;
 
 namespace TaskThree
 {
-
-    /// Задача - перепишите данный код так, чтобы он работал через коллекции C#, вместо конструкции switch
-
-
     public enum ActionType
     {
         Create,
@@ -15,32 +13,30 @@ namespace TaskThree
         Update,
 
         Delete
-        
+
     }
 
     class Program
     {
         static void Main(string[] args)
         {
-            var type = ActionType.Read;
+            var myMethods = new Dictionary<ActionType, string>();
+            myMethods[ActionType.Create] = "CreateMethod";
+            myMethods[ActionType.Read] = "ReadMethod";
+            myMethods[ActionType.Update] = "UpdateMethod";
+            myMethods[ActionType.Delete] = "DeleteMethod";
 
-            switch (type)
+            var type = ActionType.Read;
+            if (myMethods.ContainsKey(type))
             {
-                case ActionType.Create:
-                    CreateMethod(type);
-                    break;
-                case ActionType.Read:
-                    ReadMethod(type);
-                    break;
-                case ActionType.Update:
-                    UpdateMethod(type);
-                    break;
-                case ActionType.Delete:
-                    DeleteMethod(type);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+                // Invoke methods
+                var programType = Type.GetType("TaskThree.Program");
+                if (programType == null) { throw new ArgumentNullException(); }
+                var methodName = myMethods[type];
+                var invokeMethod = programType.GetMethod(myMethods[type], BindingFlags.NonPublic | BindingFlags.Static);
+                if (invokeMethod == null) { throw new ArgumentNullException(); }
+                invokeMethod.Invoke(null, new object[] { type });
+            } else { throw new ArgumentOutOfRangeException(); }
         }
 
         private static void CreateMethod(ActionType type)
